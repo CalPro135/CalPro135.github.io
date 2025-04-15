@@ -2,7 +2,6 @@ import http.server
 import socketserver
 import requests
 pip install requests
-curl http://localhost:8080/https://calpro135.github.io/
 python proxy_server.py
 
  
@@ -38,3 +37,6 @@ self.wfile.write(f"Error: {e}".encode("utf-8"))
 with socketserver.TCPServer(("", PORT), ProxyHandler) as httpd:
 print(f"Proxy server running on port {PORT}")
 httpd.serve_forever()
+
+curl http://localhost:8080/https://google.com/
+
