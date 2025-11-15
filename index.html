@@ -1,157 +1,62 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8" />
-  <title>Private Code Launcher — calpro135</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8">
+  <title>Temporary Browser Session</title>
   <style>
-    :root{
-      --bg:#0b0b0d;
-      --panel:#0f1720;
-      --text:#e6eef8;
-      --muted:#9fb3d6;
-      --accent:#5cc3ff;
+    body {
+      background: #0e0f12;
+      color: #eee;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 40px;
     }
-    body{
-      background:linear-gradient(180deg,#071021 0%, #04111a 100%);
-      color:var(--text);
-      font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-      margin:0;
-      padding:28px;
-      display:flex;
-      justify-content:center;
+    button {
+      padding: 14px 22px;
+      font-size: 20px;
+      cursor: pointer;
+      background: #4dafff;
+      color: black;
+      border: none;
+      border-radius: 8px;
     }
-    .wrap{
-      width:100%;
-      max-width:880px;
-      background:var(--panel);
-      border-radius:10px;
-      padding:20px;
-      box-shadow:0 6px 30px rgba(2,6,23,0.6);
+    p {
+      color: #bbb;
+      width: 80%;
+      margin: 20px auto;
+      line-height: 1.5;
     }
-    h1{ margin:6px 0 8px; font-size:20px; color:var(--accent) }
-    p{ margin:0 0 12px; color:var(--muted); font-size:14px }
-    textarea{
-      width:100%;
-      height:260px;
-      resize:vertical;
-      padding:12px;
-      font-size:14px;
-      background:#071422;
-      color:var(--text);
-      border:1px solid rgba(255,255,255,0.04);
-      border-radius:6px;
-      box-sizing:border-box;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Courier New", monospace;
-    }
-    .row{ display:flex; gap:8px; margin-top:12px; align-items:center; }
-    button{
-      background:linear-gradient(180deg,var(--accent),#1aa9ff);
-      color:#012433;
-      border:0;
-      padding:10px 14px;
-      font-size:15px;
-      border-radius:8px;
-      cursor:pointer;
-      box-shadow:0 6px 18px rgba(33,150,243,0.12);
-    }
-    .small{ background:transparent; color:var(--muted); border:1px solid rgba(255,255,255,0.03); padding:8px 10px; font-size:13px }
-    .hint{ font-size:13px; color:var(--muted); margin-top:10px; text-align:left }
-    .examples{ margin-top:12px; display:flex; gap:8px; flex-wrap:wrap; }
-    .chip{ background:rgba(255,255,255,0.03); padding:6px 8px; border-radius:8px; color:var(--muted); font-size:13px; cursor:pointer }
-    footer{ margin-top:14px; color:rgba(255,255,255,0.06); font-size:12px; text-align:center }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <h1>Private Code Launcher</h1>
-    <p>Write HTML/JS here. It will open in a clean new tab (about:blank), run your code there, and not store anything on this page.</p>
 
-    <textarea id="codeBox"><!DOCTYPE html>
-<html>
-<body>
-<h1>Hello</h1>
-<p>This is running inside the private tab.</p>
-<script>
-  // Example: show the time
-  document.body.insertAdjacentHTML('beforeend', '<p>Time: ' + new Date().toLocaleString() + '</p>');
-</script>
-</body>
-</html></textarea>
+<h1>Temporary Browser Session</h1>
+<p>
+Click "Open Session" to open a blank, isolated tab.  
+Anything you do in that tab (logins, cookies, website data) will disappear  
+**as soon as the tab is closed**.  
+This does NOT hide your IP and does NOT bypass library filters.
+</p>
 
-    <div class="row">
-      <button id="runBtn">Run in New Tab</button>
-      <button id="clearBtn" class="small">Clear</button>
-      <button id="loadSample" class="small">Load Sample</button>
-    </div>
-
-    <div class="hint">
-      <strong>Notes:</strong>
-      <ul>
-        <li>This opens a real new tab (no iframe). The new tab will show its own history there — this page won't save your browsing history or visited URLs.</li>
-        <li>Do not paste sites that require login or external resources that may be blocked on library computers.</li>
-        <li>Use it for HTML/JS tools, calculators, notes, or small apps you write.</li>
-      </ul>
-    </div>
-
-    <div class="examples">
-      <div class="chip" data-code="&lt;!DOCTYPE html&gt;\n&lt;html&gt;\n&lt;body&gt;\n&lt;h1&gt;Tiny Timer&lt;/h1&gt;\n&lt;button onclick=&quot;let s=5;const i=setInterval(()=>{document.getElementById('t').innerText=s--; if(s<0)clearInterval(i)},1000)&gt;Start 5s&lt;/button&gt;\n&lt;p id='t'&gt;&lt;/p&gt;\n&lt;/body&gt;\n&lt;/html&gt;">Tiny Timer</div>
-
-      <div class="chip" data-code="&lt;!DOCTYPE html&gt;\n&lt;html&gt;\n&lt;body&gt;\n&lt;h1&gt;Notes&lt;/h1&gt;\n&lt;textarea style='width:90%;height:200px' placeholder='Write notes here'&gt;&lt;/textarea&gt;\n&lt;/body&gt;\n&lt;/html&gt;">Notes Pad</div>
-
-      <div class="chip" data-code="&lt;!DOCTYPE html&gt;\n&lt;html&gt;\n&lt;body&gt;\n&lt;h1&gt;Calculator&lt;/h1&gt;\n&lt;input id='e' placeholder='2+2' /&gt;&lt;button onclick=&quot;try{document.getElementById('r').innerText=eval(document.getElementById('e').value)}catch(e){document.getElementById('r').innerText='err'}&quot;&gt;Calc&lt;/button&gt;\n&lt;p id='r'&gt;&lt;/p&gt;\n&lt;/body&gt;\n&lt;/html&gt;">Simple Calc</div>
-    </div>
-
-    <footer>Made for safe use on public computers · IPs are not hidden by this site</footer>
-  </div>
+<button onclick="openSession()">Open Session</button>
 
 <script>
-  const codeBox = document.getElementById('codeBox');
-  const runBtn = document.getElementById('runBtn');
-  const clearBtn = document.getElementById('clearBtn');
-  const loadSample = document.getElementById('loadSample');
-  const chips = document.querySelectorAll('.chip');
+function openSession() {
+  const session = window.open("about:blank", "_blank", "noopener");
 
-  runBtn.addEventListener('click', () => {
-    const code = codeBox.value;
-    // Open a blank page and write the code into it
-    const win = window.open('about:blank', '_blank', 'noopener');
-    if (!win) {
-      alert('Popup blocked. Allow popups for this site to use the launcher.');
-      return;
-    }
-    // write and close
-    win.document.open();
-    win.document.write(code);
-    win.document.close();
-    // focus the new tab (browser may restrict)
-    try { win.focus(); } catch(e) {}
-  });
+  if (!session) {
+    alert("Popup blocked — allow popups for this website.");
+    return;
+  }
 
-  clearBtn.addEventListener('click', () => {
-    if (confirm('Clear the editor?')) codeBox.value = '';
-  });
-
-  loadSample.addEventListener('click', () => {
-    const sample = `<!DOCTYPE html>
-<html>
-<body>
-<h1>Sample App</h1>
-<p>This sample shows a greeting and the local time.</p>
-<script>
-document.body.insertAdjacentHTML('beforeend', '<p>Local time: ' + new Date().toLocaleString() + '</p>');
+  session.document.write(`
+    <h1>Temporary Session</h1>
+    <p>Type a website into the address bar above.</p>
+    <p>This tab will forget all cookies & data when closed.</p>
+  `);
+  session.document.close();
+}
 </script>
-</body>
-</html>`;
-    codeBox.value = sample;
-  });
 
-  chips.forEach(c => {
-    c.addEventListener('click', () => {
-      codeBox.value = c.getAttribute('data-code');
-      codeBox.scrollIntoView({behavior:'smooth'});
-    });
-  });
-</script>
 </body>
 </html>
