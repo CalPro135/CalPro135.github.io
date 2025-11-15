@@ -2,22 +2,25 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Private Launcher</title>
+  <title>Private Code Launcher</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      max-width: 500px;
-      margin: 80px auto;
+      max-width: 600px;
+      margin: 40px auto;
       text-align: center;
     }
-    input {
-      width: 90%;
-      padding: 12px;
-      font-size: 18px;
+    textarea {
+      width: 100%;
+      height: 200px;
+      font-size: 16px;
+      padding: 10px;
+      margin-top: 15px;
+      resize: vertical;
     }
     button {
       margin-top: 20px;
-      padding: 12px 22px;
+      padding: 12px 24px;
       font-size: 18px;
       cursor: pointer;
     }
@@ -25,30 +28,34 @@
 </head>
 <body>
 
-<h2>Private Web Launcher</h2>
-<p>Enter a website URL.  
-It will open in a new tab without iframes or saving history on this site.</p>
+<h2>Private Code Launcher</h2>
+<p>Write HTML/JS here.  
+It will open in a clean new tab with no iframe and no saved history.</p>
 
-<input id="urlInput" placeholder="example: https://google.com">
+<textarea id="codeBox">
+<!DOCTYPE html>
+<html>
+<body>
+<h1>Hello</h1>
+<p>This is running inside the private tab.</p>
+</body>
+</html>
+</textarea>
+
 <br>
-<button onclick="openSite()">Go</button>
+<button onclick="launchCode()">Run in New Tab</button>
 
 <script>
-function openSite() {
-  let url = document.getElementById("urlInput").value.trim();
+function launchCode() {
+  const code = document.getElementById("codeBox").value;
 
-  if (!url) {
-    alert("Please enter a URL!");
-    return;
-  }
+  // Open empty page
+  const win = window.open("about:blank", "_blank");
 
-  // Add https:// if missing
-  if (!url.startsWith("http://") && !url.startsWith("https://")) {
-    url = "https://" + url;
-  }
-
-  // Open in new tab
-  window.open(url, "_blank", "noopener");
+  // Write the user’s code into the new tab
+  win.document.open();
+  win.document.write(code);
+  win.document.close();
 }
 </script>
 
